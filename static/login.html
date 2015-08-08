@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Login Page</title>
+		<link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+		<script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+		<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	</head>
+	<body>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12" style="text-align: center;">
+					<h1>登录页面</h1>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4 col-md-offset-4">
+					<p class="bg-warning" id="pnError" style="height: 35px;line-height: 35px;text-align: center;display: none;">
+						登录错误
+					</p>
+					<form>
+						<div class="form-group">
+							<label for="UserName">用户名</label>
+							<input type="text" class="form-control" id="UserName" name="UserName">
+						</div>
+						<div class="form-group">
+							<label for="Password">密码</label>
+							<input type="password" class="form-control" id="Password" name="Password">
+						</div>
+						<div class="form-group" style="text-align: center;">
+							<button type="button" class="btn btn-success btn-lg" style="width: 80%;" onclick="fBtnLogin();">登 录</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+		function fBtnLogin(){
+			$.ajax('/login',{method:'POST',data:{UserName:$('#UserName').val(),Password:$('#Password').val()}}).then(function(result){
+				localStorage.setItem('token',result.Token);
+				location='/';
+			},function(result){
+				$('#pnError').css('display','block');
+			});
+		}
+		</script>
+	</body>
+</html>
